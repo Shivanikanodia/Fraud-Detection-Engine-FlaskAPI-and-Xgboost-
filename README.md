@@ -13,12 +13,12 @@ To Provide an interface to Risk Team, banking system, or customer support team �
 ---- 
 ### STEPS:
 
-1. Data Collection and Preperation:
-2. Exploratory Data Analysis:
-3. Data Preprocessing and Feature Engineering:
-4. Model Selection, Model Traning and Model Evaluation:
-5. Model Deployement and Model Hosting:
-6. Model Perfomance Monitoring and Data drift tracking: 
+1. **Data Collection and Preperation:**
+2. **Exploratory Data Analysis:**
+3. **Data Preprocessing and Feature Engineering:**
+4. **Model Selection, Model Traning and Model Evaluation:**
+5. **Model Deployement and Model Hosting:**
+6. **Model Perfomance Monitoring and Data drift tracking:**
 
 ## Data Collection and Preperation :
 
@@ -34,11 +34,9 @@ To Provide an interface to Risk Team, banking system, or customer support team �
 
 1. Build Bar charts to Visualise Merchants Categories based on (Fraud Rate and Fraud Amountt), Channe - Pos_Entry_Model , (Spending patterns and High Velocity in transactions), Temporal trends (Transaction_hour, Is transaction happening at night and Time Since last transaction)  
 
-
 **INSIGHTS:** 
   
 1. IN AND OUT showed a high fraud rate even at moderate transaction volumes, indicating vulnerabilities at specific outlets.
-
 2.Uber, Lyft, Walmart, Target, Sears, and Amazon consistently showed loss amounts ranging from $10K to $35K with fraud rates between 2–5%, suggesting that fraudsters may target major brands with high transaction volumes and heavy traffic.
 3. Fraud patterns varied by time and merchant — higher fraud amounts occurred between 12 AM–6 AM for Uber and Lyft, while Walmart, Target, and Sears experienced losses of $20K–$35K, highlighting off-hour vulnerabilities in e-commerce and transportation platforms
 
@@ -63,10 +61,7 @@ To Provide an interface to Risk Team, banking system, or customer support team �
 ### Model Selection, Model Traning and Model Evaluation:
 
 Logistic Regression was selected as base model as its more interpretable and provide clear coefficents for feature importance. 
-
-Created sklearn logisitc pipeline has encapsulated coulmn transformer (Scaling and preprocessing), SMOTE to handle class imbalance, by creating synthetic samples of minority class and Logistic Regression serves as the final classifier with max_iter=1000 for convergence. 
-
-Pipeline allow training on raw data X_train, y_train and testing on X_test and y_test. 
+Created sklearn logisitc pipeline has encapsulated coulmn transformer (Scaling and preprocessing), SMOTE to handle class imbalance, by creating synthetic samples of minority class and Logistic Regression serves as the final classifier with max_iter=1000 for convergence.  Pipeline allow training on raw data X_train, y_train and testing on X_test and y_test. 
 
 Stored performance metrics from log model like classfication report (F1, Precision and Recall) confusion matrix . With recall of 70% , model did a good job capturing 70% of the fraudulent transaction i.e minimizing false negative and mazimizing Recall. While high number of false positives (>8000) were detected at thresold of 0.5. We also checked by improving thresold little which improved our precision. 
 
@@ -76,22 +71,9 @@ Next, Moved to Xgboost for more complex model, implemented classifier using simi
 
 ##  Model Deployement and Model Hosting:
 
-XGBoost performed notably better than the Logistic Regression model due to its ability to capture non-linear relationships and complex feature interactions that linear models somestime fail to capture . It achieved a recall of 0.69, indicating a balanced trade-off between identifying true positives and minimizing false negatives.
+**Saved Xgboost Model as pkl as best model as its gives a balance between precison and recall, created a lightweight API or service that can accept new input and return predictions immediately using FlaskAPI and hosted on AWS Elastic beanstalk for monitoring logs, thresolds and drifts in performance.**
 
-Saved Xgboost Model as pkl as best model as its gives a balance between precison and recall,  created a lightweight API or service that can accept new input and return predictions immediately using FlaskAPI and deployed on AWS Elastic beanstalk for monitoring logs, thresolds and drifts in performance. 
-
-The pipeline ensures automation, consistency, and high interpretability — making it suitable for catching fraud in real time. 
-
- <img width="957" height="630" alt="Screenshot 2025-10-07 at 17 05 53" src="https://github.com/user-attachments/assets/9846a1c8-f6b1-4eb7-ad24-e4551d7285bb" />
-
-
- <img width="1320" height="324" alt="image" src="https://github.com/user-attachments/assets/4a72641e-b71f-4749-ac45-528fc6bde1b3" />
- 
-
-<img width="610" height="120" alt="Screenshot 2025-10-07 at 17 06 54" src="https://github.com/user-attachments/assets/ab5053e9-4cdb-446d-9417-00a87fcf3a16" />
-
-
-<img width="1234" height="906" alt="image" src="https://github.com/user-attachments/assets/d3687817-566d-4d29-94bf-b4a1e58a0c6e" />
+**The pipeline ensures automation, consistency, and high interpretability — making it suitable for catching fraud in real time.**
 
 -----
 
@@ -100,7 +82,6 @@ The pipeline ensures automation, consistency, and high interpretability — maki
 Checked If data was transformed correctly using name_steps/Features_name after preprocessing.
 Checked  actual vs predicted values, ensured doing SMOTE before splitting into train/test.
 Applying StandardScaler or LabelEncodermanually before the split.
-Ensure scale_pos_weight and Evaluated with metrics focused on PR-AUC , Recall at top k (top 500 predictions), Precision at different threshold and tuned threshold to maximize F1. 
 
 ------
 
@@ -111,20 +92,6 @@ This plot ranks features by their average absolute SHAP value, which means:
 <img width="783" height="860" alt="image" src="https://github.com/user-attachments/assets/e28f773c-36b0-4c38-9856-9969e41d803f" />
 
 Model is most driven by merchant category, transaction amount and spending patterns, and whether the card is present during the transaction — likely important indicators of fraud or transaction legitimacy.
-
-**transactionAmount:** : Red points (high amounts) → mostly on the right → large amounts increase predicted risk (e.g., higher chance of fraud).
-
-Blue points (low amounts) → on the left → lower amounts reduce the probability of fraud.
-
-**cardPresent:** : Blue (card not present) on the right → non-present cards increase risk (typical of online fraud).
-
-Red (present) on the left → card present reduces risk.
-
-**currentBalance:** : Red (high balance) → left → higher balances reduce risk.
-
-Blue (low balance) → right → low balances increase risk.
-
-**merchantCategoryCode_LE and merchantName_FE:**: Both show wide spread → certain merchants or merchant categories strongly influence whether a transaction is classified as risky.
 
 ---
 
