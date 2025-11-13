@@ -13,34 +13,41 @@ To Provide an interface to Risk Team, banking system, or customer support team �
 ---- 
 ### STEPS:
 
-1. **Data Collection and Preperation:**
+1. **Data Collection and Preparation:**
 2. **Exploratory Data Analysis:**
 3. **Data Preprocessing and Feature Engineering:**
 4. **Model Selection, Model Traning and Model Evaluation:**
 5. **Model Deployement and Model Hosting:**
 6. **Model Perfomance Monitoring and Data drift tracking:**
 
-## Data Collection and Preperation :
+## Data Collection and Preparation:
 
-- The dataset had 7 lakh rows and 28 features, with mixed data type. We received it in JSON format and processed it using JSONlines library. 
-- The dataset was checked for missing values using the isnull().sum() function and empty strings and whitespace characters using  regular expressions (Regex) for  EcoBuffer, 'posOnPremises'.  
-- Used nunique function in python to detect unique value distribution and category diversity.
-- Used pd.to_datetime to convert datetime coulmn stored as string into date object (Transactiondatetime, AcountOpenDate, ExpiryDate). 
-- For numerical data distribution, calculated skewness, visualized using KDE and histrograms, for rightly skewed trasanctions used log1p to make data normalised. 
+- The dataset contained 700,000 rows and 28 features with mixed data types. It was received in JSON format and processed using the JSONLines library.
+
+- The dataset was checked for missing values using the isnull().sum() function and for empty strings and whitespace characters using regular expressions (Regex).
+
+- The nunique() function in Python was used to detect unique value distribution and category diversity.
+
+- The pd.to_datetime() function was applied to convert datetime columns stored as strings into proper date objects (TransactionDateTime, AccountOpenDate, ExpiryDate).
+
+- For numerical data distribution, skewness was calculated and visualized using KDE plots and histograms. For right-skewed transaction data, the log1p transformation was applied to normalize the distribution.
 
 ---
 
-## Data Visualisation - EDA: 
+## Exploratory Data Analysis: 
 
-1. Build Bar charts to Visualise Merchants Categories based on (Fraud Rate and Fraud Amountt), Channe - Pos_Entry_Model , (Spending patterns and High Velocity in transactions), Temporal trends (Transaction_hour, Is transaction happening at night and Time Since last transaction)  
+Built bar charts to visualize merchant categories by fraud rate and fraud amount, analyze channels (Pos_Entry_Mode),  and high-velocity patterns, and study temporal trends like transaction hour, night-time activity, and time since last transaction.
 
 <img width="990" height="388" alt="image" src="https://github.com/user-attachments/assets/743d033e-1744-47de-a284-3f0e4e142985" />
 
 **INSIGHTS:** 
   
-1. IN AND OUT showed a high fraud rate even at moderate transaction volumes, indicating vulnerabilities at specific outlets.
-2.Uber, Lyft, Walmart, Target, Sears, and Amazon consistently showed loss amounts ranging from $10K to $35K with fraud rates between 2–5%, suggesting that fraudsters may target major brands with high transaction volumes and heavy traffic.
-3. Fraud patterns varied by time and merchant — higher fraud amounts occurred between 12 AM–6 AM for Uber and Lyft, while Walmart, Target, and Sears experienced losses of $20K–$35K, highlighting off-hour vulnerabilities in e-commerce and transportation platforms
+
+- IN AND OUT showed a high fraud rate even with moderate transaction volume.
+
+- Uber, Lyft, Walmart, Target, Sears, and Amazon had losses of $10K–$35K with 2–5% fraud rates, indicating fraud focus on major brands.
+
+- Higher fraud occurred between 12 AM–6 AM for Uber and Lyft, and Walmart, Target, Sears showed $20K–$35K losses, revealing off-hour vulnerabilities.
 
 <img width="786" height="600" alt="Screenshot 2025-11-11 at 12 19 22" src="https://github.com/user-attachments/assets/8ca7df68-7ec1-4326-aed4-6ddadb2efeba" />
 
@@ -48,25 +55,23 @@ To Provide an interface to Risk Team, banking system, or customer support team �
 
 ## FEATURE ENGINEERING:
 
-1. Merchants data was significantly higher then usual, 2000 uniques merchants. Grouped mechant name as "Others" for merchant frequency less than 250. This reduced high cardinality, improved model efficiency, and prevented overfitting. It also helped the model focus on merchants with enough data to learn meaningful fraud patterns. 
+- The dataset contained over 2,000 unique merchants, leading to high cardinality. Merchant names with a frequency of fewer than 250 transactions were grouped under “Others”. This reduced dimensionality, improved model efficiency, and prevented overfitting, allowing the model to focus on merchants with sufficient data to learn meaningful fraud patterns.
 
-2. Fraud Detection dataset is usually highly imbalanced, to solve this created data preoprocessing pipeline and handlled class imbalance effectively. To Make Preprocessing Modular and Reproducible, used coulmn transformers inside pipeline. This allows seperate preprocessing for numerical, categorical, log_transformed and binary values, avoiding data leakage.
+- Since fraud detection datasets are highly imbalanced, a data preprocessing pipeline was created to handle class imbalance effectively. To ensure modularity and reproducibility, ColumnTransformers were used within the pipeline, enabling separate preprocessing for numerical, categorical, and binary features while avoiding data leakage.
 
 -----
 
 ### Model Selection, Model Traning and Model Evaluation:
 
-Logistic Regression was selected as base model as its more interpretable and provide clear coefficents for feature importance. 
+- Logistic Regression was selected as the base model due to its interpretability and ability to provide clear feature coefficients for understanding feature importance.
 
-Created sklearn logisitc pipeline has encapsulated coulmn transformer (Scaling and preprocessing), SMOTE to handle class imbalance, by creating synthetic samples of minority class and Logistic Regression serves as the final classifier with max_iter=1000 for convergence. 
+Built a Scikit-learn pipeline that encapsulated, ColumnTransformer for scaling and preprocessing, SMOTE to address class imbalance by generating synthetic samples of the minority class, and Logistic Regression as the final classifier (max_iter=1000 for convergence).
 
-Stored performance metrics from log model like classfication report (F1, Precision and Recall) confusion matrix .
+Collected model performance metrics including classification report (Precision, Recall, F1-score) and confusion matrix for evaluation.
 
-Next, Moved to Xgboost for more complex model, implemented classifier using similar preoprocesor using scale_pos_weight, n_estimators, Max_depth, col_sample, sub_sample.
+Subsequently, implemented a more complex model using XGBoost, applying a similar preprocessing setup and tuning hyperparameters such as scale_pos_weight, n_estimators, max_depth, colsample_bytree, and subsample for optimal performance.
 
-<img width="561" height="226" alt="Screenshot 2025-11-12 at 11 54 49" src="https://github.com/user-attachments/assets/7b191e69-39ec-46a2-9722-a40b9b51e71c" />
 
-<img width="577" height="336" alt="Screenshot 2025-11-12 at 11 54 55" src="https://github.com/user-attachments/assets/0ce56e5c-e9af-484e-b02a-87cc851e8706" />
 
 
 ##  Model Deployment and Model Hosting:
