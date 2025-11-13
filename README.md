@@ -66,8 +66,7 @@ Next, Moved to Xgboost for more complex model, implemented classifier using simi
 
 <img width="561" height="226" alt="Screenshot 2025-11-12 at 11 54 49" src="https://github.com/user-attachments/assets/7b191e69-39ec-46a2-9722-a40b9b51e71c" />
 
-
-<img width="561" height="226" alt="Screenshot 2025-11-12 at 11 54 49" src="https://github.com/user-attachments/assets/1ae6485c-0826-4105-bed5-b839c4f825b9" />
+<img width="577" height="336" alt="Screenshot 2025-11-12 at 11 54 55" src="https://github.com/user-attachments/assets/0ce56e5c-e9af-484e-b02a-87cc851e8706" />
 
 
 ##  Model Deployment and Model Hosting:
