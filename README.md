@@ -84,6 +84,8 @@ Collected model performance metrics including classification report (Precision, 
 
 Subsequently, implemented a more complex model using XGBoost, applying a similar preprocessing setup and tuning hyperparameters such as scale_pos_weight, n_estimators, max_depth, colsample_bytree, and subsample for optimal performance.
 
+<img width="1536" height="1024" alt="162eef2e-8119-4c61-a8af-46b3493df58d" src="https://github.com/user-attachments/assets/4defe221-403e-4e4e-9488-938135f62552" />
+
 
 ##  Model Deployment and Model Hosting:
 
