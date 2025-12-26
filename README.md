@@ -109,7 +109,18 @@ As a result, model was mosttly driven by merchant category, transaction amount, 
 - As result Uber, Lyft, Ebay.com, Walmart, discount, Gap and Sears consistently appeared in list where Fraud transaction volume were high. This evidented from the temporal analysis where hours like 12:00 AM, 01:00 AM and 03:00 AM were targeted mostly and these specific merchants showed fraudulent activity indicating low monitoring hours or bot testing.
 - Some Account Numbers appeared consistently among these hours for similar merchants, Requires deliberate monitoring and strong verification.  
 
-### FUTURE WORK:
+#### Fraud Detection  UI:
+
+<img width="1161" height="590" alt="Screenshot 2025-12-25 at 23 35 23" src="https://github.com/user-attachments/assets/f9e69fae-a357-455c-a0ae-460d26a10519" />
+
+The UI Takes User inputs on transaction_amount, Merchant Category, Transaction_time, Zip Code and State, which sends the request to preodict @post at endpoint, which then return backs to predictions using Xgboost model (using preprocessing inside pipeline). 
+
+#### Results:
+
+<img width="1038" height="302" alt="Screenshot 2025-12-25 at 23 34 14" src="https://github.com/user-attachments/assets/07a30532-4e44-4288-87e5-563949ba3968" />
+
+The Model then works on engineering features, apply distance calculation and returns predictions based on logics. 
+
 
 - Working on creating AI agent Interface which help risk team and customers to understand if transaction is fraudulent by inputing Case details like Transaction_id, Transaction_Amount, Merchant_name, Transaction_Hour, Merchant_Location, Channel.
 - AI would use SHAP Explainations and sends those inputs to API Endpoint and will respond based on model behaviour, ensuring sensitivty, data privacy and compliance.
@@ -119,7 +130,6 @@ As a result, model was mosttly driven by merchant category, transaction amount, 
 Performance: accuracy/precision/recall/PR-AUC 
 
 Data: schema/volume drift and label drift (once labels arrive).
-
 
 **2. Logging & Audit:**
 
